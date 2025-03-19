@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}F1World - About{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="text-center mb-5">About F1World</h1>
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="card bg-dark border-danger">
+                <div class="card-body">
+                    <h2 class="card-title mb-4">Our Mission</h2>
+                    <p class="card-text">
+                        F1World is a machine learning project that aims to predict Formula 1 race outcomes using various statistical and machine learning models. Our project utilizes real F1 race data to train and test different models including:
+                    </p>
+                    <ul class="list-unstyled">
+                        <li class="mb-3">
+                            <i class="bi bi-check-circle-fill text-danger me-2"></i>
+                            Simple Linear Regression (SLR)
+                        </li>
+                        <li class="mb-3">
+                            <i class="bi bi-check-circle-fill text-danger me-2"></i>
+                            Multiple Linear Regression (MLR)
+                        </li>
+                        <li class="mb-3">
+                            <i class="bi bi-check-circle-fill text-danger me-2"></i>
+                            Logistic Regression
+                        </li>
+                        <li class="mb-3">
+                            <i class="bi bi-check-circle-fill text-danger me-2"></i>
+                            Polynomial Regression
+                        </li>
+                        <li class="mb-3">
+                            <i class="bi bi-check-circle-fill text-danger me-2"></i>
+                            K-Nearest Neighbors (KNN)
+                        </li>
+                    </ul>
+                    <p class="card-text">
+                        Our models analyze various factors including weather conditions, track temperature, driver experience, car specifications, and more to make predictions about race outcomes.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 

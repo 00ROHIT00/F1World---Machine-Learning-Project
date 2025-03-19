@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+
+{% block title %}F1World - Home{% endblock %}
+
+{% block content %}
+<div class="hero-section full-width text-center py-5">
+    <div class="container">
+        <h1 class="display-4 fw-bold mb-4 text-light">Welcome to F1World</h1>
+        <p class="lead mb-4 text-light">Predict F1 race outcomes using advanced machine learning models</p>
+        <div class="cta-buttons">
+            <a href="{% url 'try_it' %}" class="btn btn-danger btn-lg me-3">
+                <i class="bi bi-play-circle me-2"></i>Try It Out
+            </a>
+            <a href="{% url 'about' %}" class="btn btn-outline-light btn-lg">
+                <i class="bi bi-info-circle me-2"></i>Learn More
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="container py-5">
+    <div class="features-section">
+        <h2 class="text-center mb-5 text-light">Our Machine Learning Models</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <i class="bi bi-graph-up text-danger display-4 mb-3"></i>
+                        <h3 class="card-title">Simple Linear Regression</h3>
+                        <p class="card-text">Basic linear regression model for predicting lap times based on single variables</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <i class="bi bi-diagram-3 text-danger display-4 mb-3"></i>
+                        <h3 class="card-title">Multiple Linear Regression</h3>
+                        <p class="card-text">Advanced linear model considering multiple factors for race predictions</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <i class="bi bi-diagram-2 text-danger display-4 mb-3"></i>
+                        <h3 class="card-title">Polynomial Regression</h3>
+                        <p class="card-text">Non-linear model for complex race outcome predictions</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <i class="bi bi-diagram-2 text-danger display-4 mb-3"></i>
+                        <h3 class="card-title">Logistic Regression</h3>
+                        <p class="card-text">Classification model for predicting race positions and outcomes</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <i class="bi bi-diagram-2 text-danger display-4 mb-3"></i>
+                        <h3 class="card-title">K-Nearest Neighbors</h3>
+                        <p class="card-text">Instance-based learning for race performance classification</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .hero-section {
+        background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)),
+                    url('https://images.unsplash.com/photo-1616849534446-9e66e4860673?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+        background-size: cover;
+        background-position: center;
+        padding: 8rem 0;
+        margin-top: 0;
+        margin-bottom: 2rem;
+        position: relative;
+        z-index: 1;
+    }
+    .card {
+        transition: transform 0.3s ease;
+        background-color: var(--darker-bg) !important;
+        border-color: var(--ferrari-red) !important;
+    }
+    .card:hover {
+        transform: translateY(-5px);
+    }
+    .btn-danger {
+        background-color: var(--ferrari-red);
+        border-color: var(--ferrari-red);
+    }
+    .btn-danger:hover {
+        background-color: #b30000;
+        border-color: #b30000;
+    }
+    .text-light {
+        color: var(--text-light) !important;
+    }
+</style>
+{% endblock %} 

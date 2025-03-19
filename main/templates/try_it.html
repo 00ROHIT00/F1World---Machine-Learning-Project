@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block title %}F1World - Try It Out{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="text-center mb-5">Try Our Models</h1>
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+            <div class="card bg-dark border-danger">
+                <div class="card-body">
+                    <h2 class="card-title mb-4">Coming Soon</h2>
+                    <p class="card-text">
+                        Our interactive prediction interface is currently under development. Soon you'll be able to:
+                    </p>
+                    <ul class="list-unstyled">
+                        <li class="mb-3">
+                            <i class="bi bi-clock-history text-danger me-2"></i>
+                            Predict lap times using our regression models
+                        </li>
+                        <li class="mb-3">
+                            <i class="bi bi-trophy text-danger me-2"></i>
+                            Forecast race positions and outcomes
+                        </li>
+                        <li class="mb-3">
+                            <i class="bi bi-graph-up text-danger me-2"></i>
+                            Analyze race performance factors
+                        </li>
+                    </ul>
+                    <div class="text-center mt-4">
+                        <a href="{% url 'about' %}" class="btn btn-outline-danger">
+                            <i class="bi bi-info-circle me-2"></i>Learn More About Our Models
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %} 
