@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4 text-light">Simple Linear Regression Predictor</h2>
+    
+    {% if error %}
+    <div class="alert alert-danger" role="alert">
+        {{ error }}
+    </div>
+    {% endif %}
+    
+    {% if success %}
+    <div class="alert alert-success" role="alert">
+        Predicted {{ target_name }}: {{ prediction }}
+    </div>
+    {% endif %}
+    
+    <div class="card bg-dark text-light border-danger">
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+                {% for feature in feature_names %}
+                <div class="mb-3">
+                    <label for="feature_{{ forloop.counter0 }}" class="form-label">{{ feature }}</label>
+                    <input type="number" step="any" class="form-control bg-dark text-light border-danger" 
+                           id="feature_{{ forloop.counter0 }}" 
+                           name="feature_{{ forloop.counter0 }}" 
+                           value="0"
+                           required>
+                </div>
+                {% endfor %}
+                <button type="submit" class="btn btn-danger">Predict</button>
+            </form>
+        </div>
+    </div>
+
+    {% if success %}
+    <div class="card bg-dark text-light border-danger mt-4">
+        <div class="card-body">
+            <h4 class="card-title">Prediction Details</h4>
+            <table class="table table-dark table-bordered">
+                <thead>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for feature, value in input_values.items %}
+                    <tr>
+                        <td>{{ feature }}</td>
+                        <td>{{ value }}</td>
+                    </tr>
+                    {% endfor %}
+                    <tr class="table-danger">
+                        <td><strong>{{ target_name }}</strong></td>
+                        <td><strong>{{ prediction }}</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<style>
+    .form-control:focus {
+        background-color: var(--darker-bg);
+        color: var(--text-light);
+        border-color: var(--ferrari-red);
+        box-shadow: 0 0 0 0.25rem rgba(220, 0, 0, 0.25);
+    }
+    
+    .table {
+        color: var(--text-light);
+    }
+    
+    .table-bordered {
+        border-color: var(--ferrari-red);
+    }
+    
+    .table-danger {
+        --bs-table-bg: rgba(220, 0, 0, 0.1);
+        --bs-table-color: var(--text-light);
+    }
+
+    .card {
+        background-color: var(--darker-bg) !important;
+    }
+
+    .form-control {
+        background-color: var(--darker-bg) !important;
+        color: var(--text-light) !important;
+    }
+
+    .form-control::placeholder {
+        color: var(--text-light-muted) !important;
+    }
+</style>
+{% endblock %} 
