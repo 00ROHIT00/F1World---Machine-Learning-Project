@@ -3,6 +3,7 @@
 {% block content %}
 <div class="container mt-5">
     <h2 class="mb-4 text-light text-center title">Simple Linear Regression Predictor</h2>
+    <p class="text-light text-center subtitle mb-5">Predict F1 Pit Stop Time Based on Number of Tires Changed</p>
     
     {% if error %}
     <div class="alert alert-danger" role="alert">
@@ -12,7 +13,7 @@
     
     {% if success %}
     <div class="alert alert-success" role="alert">
-        Predicted {{ target_name }}: {{ prediction }}
+        Predicted Pit Stop Time: {{ prediction }}s
     </div>
     {% endif %}
     
@@ -21,16 +22,27 @@
             <form method="post">
                 {% csrf_token %}
                 {% for feature in feature_names %}
-                <div class="mb-3">
-                    <label for="feature_{{ forloop.counter0 }}" class="form-label">{{ feature }}</label>
-                    <input type="number" step="any" class="form-control bg-dark text-light border-danger" 
+                <div class="mb-4">
+                    <label for="feature_{{ forloop.counter0 }}" class="form-label d-flex align-items-center">
+                        {{ feature }}
+                        <i class="bi bi-info-circle ms-2" data-bs-toggle="tooltip" data-bs-placement="right" 
+                           title="Number of tires to be changed during the pit stop (1-4)"></i>
+                    </label>
+                    <input type="number" 
+                           step="1" 
+                           class="form-control bg-dark text-light border-danger" 
                            id="feature_{{ forloop.counter0 }}" 
                            name="feature_{{ forloop.counter0 }}" 
-                           value="0"
+                           value="4"
+                           min="1"
+                           max="4"
                            required>
+                    <small class="text-muted">
+                        Enter number of tires to change (1-4)
+                    </small>
                 </div>
                 {% endfor %}
-                <button type="submit" class="btn btn-danger">Predict</button>
+                <button type="submit" class="btn btn-danger w-100">Predict Pit Stop Time</button>
             </form>
         </div>
     </div>
@@ -42,7 +54,7 @@
             <table class="table table-dark table-bordered">
                 <thead>
                     <tr>
-                        <th>Feature</th>
+                        <th>Factor</th>
                         <th>Value</th>
                     </tr>
                 </thead>
@@ -50,12 +62,12 @@
                     {% for feature, value in input_values.items %}
                     <tr>
                         <td>{{ feature }}</td>
-                        <td>{{ value }}</td>
+                        <td>{{ value }} tire{% if value != 1 %}s{% endif %}</td>
                     </tr>
                     {% endfor %}
                     <tr class="table-danger">
                         <td><strong>{{ target_name }}</strong></td>
-                        <td><strong>{{ prediction }}</strong></td>
+                        <td><strong>{{ prediction }}s</strong></td>
                     </tr>
                 </tbody>
             </table>
@@ -64,7 +76,50 @@
     {% endif %}
 </div>
 
+{% if r2_score %}
+<div class="card bg-dark text-light border-danger mt-4">
+    <div class="card-body text-center">
+        <h4 class="card-title mb-3">Model Performance</h4>
+        <p class="mb-2">R² Score: <span class="badge bg-danger">{{ r2_score|floatformat:4 }}</span></p>
+        <small class="text-muted">
+            R² score ranges from 0 to 1, where 1 indicates perfect predictions.
+            This score represents how well the model explains the variance in the data.
+        </small>
+    </div>
+</div>
+{% endif %}
+
 <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+    * {
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .title {
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        position: relative;
+        padding-bottom: 15px;
+    }
+
+    .title::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 60px;
+        height: 3px;
+        background-color: var(--ferrari-red);
+    }
+
+    .subtitle {
+        font-weight: 300;
+        font-size: 1.1rem;
+        opacity: 0.8;
+    }
+
     .form-control:focus {
         background-color: var(--darker-bg);
         color: var(--text-light);
@@ -87,15 +142,88 @@
 
     .card {
         background-color: var(--darker-bg) !important;
+        border-radius: 10px;
     }
 
     .form-control {
         background-color: var(--darker-bg) !important;
         color: var(--text-light) !important;
+        border-radius: 8px;
     }
 
     .form-control::placeholder {
         color: var(--text-light-muted) !important;
     }
+
+    .btn {
+        font-weight: 500;
+        padding: 10px 25px;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(220, 0, 0, 0.3);
+    }
+
+    .form-label {
+        font-weight: 500;
+        margin-bottom: 8px;
+    }
+
+    .alert {
+        border-radius: 10px;
+        font-weight: 500;
+    }
+
+    .card-title {
+        font-weight: 600;
+        margin-bottom: 20px;
+    }
+
+    .table thead th {
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.9rem;
+        letter-spacing: 0.5px;
+    }
+
+    .table tbody td {
+        font-weight: 400;
+        padding: 12px;
+    }
+
+    .table-danger strong {
+        font-weight: 600;
+    }
+
+    .text-muted {
+        font-size: 0.85rem;
+        margin-top: 4px;
+    }
+
+    .bi-info-circle {
+        font-size: 0.9rem;
+        cursor: help;
+    }
+
+    .d-flex.align-items-center {
+        gap: 0.5rem;
+    }
+
+    .badge {
+        font-size: 1.1rem;
+        padding: 0.5rem 1rem;
+    }
 </style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    });
+});
+</script>
 {% endblock %} 
