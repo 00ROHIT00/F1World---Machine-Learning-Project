@@ -1,0 +1,51 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <a href="{% url 'slr' %}" class="text-decoration-none">
+                <div class="card h-100 hover-card">
+                    <div class="card-body">
+                        <h5 class="card-title">Simple Linear Regression</h5>
+                        <p class="card-text">Predict pit stop time based on the number of tires changed.</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-4 mb-4">
+            <a href="{% url 'mlr' %}" class="text-decoration-none">
+                <div class="card h-100 hover-card">
+                    <div class="card-body">
+                        <h5 class="card-title">Multiple Linear Regression</h5>
+                        <p class="card-text">Predict race points based on qualifying position, overtakes, pit stops, and fastest lap bonus.</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-4 mb-4">
+            <a href="{% url 'lr' %}" class="text-decoration-none">
+                <div class="card h-100 hover-card">
+                    <div class="card-body">
+                        <h5 class="card-title">Logistic Regression</h5>
+                        <p class="card-text">Predict podium finish probability based on qualifying position, past performance, and track characteristics.</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+
+<style>
+.hover-card {
+    transition: transform 0.2s ease-in-out;
+    border: 1px solid rgba(0,0,0,0.125);
+}
+
+.hover-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+</style>
+{% endblock %} 

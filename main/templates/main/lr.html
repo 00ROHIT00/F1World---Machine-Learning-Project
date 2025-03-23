@@ -1,0 +1,129 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<style>
+    .form-label {
+        color: white;
+    }
+</style>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="mb-0">F1 Podium Prediction</h2>
+                </div>
+                <div class="card-body">
+                    <div class="alert alert-info">
+                        <h5>Model Performance Metrics:</h5>
+                        <p class="mb-1">Accuracy: {{ accuracy|floatformat:3 }}</p>
+                        <p class="mb-1">Precision: {{ precision|floatformat:3 }}</p>
+                        <p class="mb-1">Recall: {{ recall|floatformat:3 }}</p>
+                        <p class="mb-0">F1 Score: {{ f1_score|floatformat:3 }}</p>
+                    </div>
+
+                    {% if error %}
+                    <div class="alert alert-danger">{{ error }}</div>
+                    {% endif %}
+
+                    <form method="post" class="mt-4">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="qualifying_position" class="form-label">Qualifying Position (1-20)</label>
+                            <input type="number" class="form-control" id="qualifying_position" name="qualifying_position" 
+                                   min="1" max="20" step="1" required
+                                   value="{{ input_values.qualifying_position|default:'' }}">
+                            <div class="form-text">Enter the driver's qualifying position (1 = pole position)</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="past_performance" class="form-label">Past Race Performance (0-1)</label>
+                            <input type="number" class="form-control" id="past_performance" name="past_performance" 
+                                   min="0" max="1" step="0.1" required
+                                   value="{{ input_values.past_performance|default:'' }}">
+                            <div class="form-text">Enter the driver's past performance score (0 = poor, 1 = excellent)</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="track_characteristics" class="form-label">Track Characteristics Match (0-1)</label>
+                            <input type="number" class="form-control" id="track_characteristics" name="track_characteristics" 
+                                   min="0" max="1" step="0.1" required
+                                   value="{{ input_values.track_characteristics|default:'' }}">
+                            <div class="form-text">Enter how well the track suits the driver/car (0 = poor match, 1 = perfect match)</div>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Predict Podium Finish</button>
+                    </form>
+
+                    {% if success %}
+                    <div class="mt-4">
+                        <div class="card">
+                            <div class="card-header {% if prediction == 'Podium' %}bg-success{% else %}bg-warning{% endif %} text-white">
+                                <h5 class="mb-0">Prediction Results</h5>
+                            </div>
+                            <div class="card-body">
+                                <h4>{{ prediction }}</h4>
+                                <p class="mb-0">Probability of Podium Finish: {{ probability }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.card {
+    background-color: var(--darker-bg);
+    border-color: var(--ferrari-red);
+}
+
+.btn-primary {
+    background-color: var(--ferrari-red);
+    border-color: var(--ferrari-red);
+}
+
+.btn-primary:hover {
+    background-color: #b30000;
+    border-color: #b30000;
+}
+
+.form-control {
+    background-color: var(--dark-bg);
+    border-color: var(--ferrari-red);
+    color: var(--text-light);
+}
+
+.form-control:focus {
+    background-color: var(--dark-bg);
+    border-color: var(--ferrari-red);
+    color: var(--text-light);
+    box-shadow: 0 0 0 0.25rem rgba(220, 0, 0, 0.25);
+}
+
+.form-text {
+    color: var(--text-muted);
+}
+
+.alert-info {
+    background-color: var(--dark-bg);
+    border-color: var(--ferrari-red);
+    color: var(--text-light);
+}
+
+.card-header {
+    background-color: var(--ferrari-red) !important;
+}
+
+.bg-success {
+    background-color: #198754 !important;
+}
+
+.bg-warning {
+    background-color: #ffc107 !important;
+}
+</style>
+{% endblock %} 
